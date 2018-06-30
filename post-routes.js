@@ -4,7 +4,7 @@ const router = express.Router();
 const { BlogPost } = require('./models');
 
 //Begin get request
-router.get('/', (req, res) => {
+router.get('/posts', (req, res) => {
     // res.json(BlogPosts.get());
     BlogPost
     .find()
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
     // res.send('GET /posts')
 });
 
-router.get('/:id', (req,res) => {
+router.get('/posts/:id', (req,res) => {
     BlogPost
     .findById(req.params.id)
     .then(post => res.json(post.serialize()))
@@ -29,7 +29,7 @@ router.get('/:id', (req,res) => {
     // res.send('GET /posts/:id')
 });
 //Begin post request with create function
-router.post('/', (req, res) => {
+router.post('/posts', (req, res) => {
     const requiredFields = ['title', 'content', 'author'];
     for (let i=0; i < requiredFields.length; i++){
         const field = requiredFields[i];
@@ -55,7 +55,7 @@ router.post('/', (req, res) => {
 });
 
 //Begin put request with update function 
-router.put('/:id', (req, res) => {
+router.put('/posts/:id', (req, res) => {
     if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
         res.status(400).json({
             error: 'Request path id and request body id values must match'
@@ -80,7 +80,7 @@ router.put('/:id', (req, res) => {
 });
 
 //Begin delete request
-router.delete('/:id', (req, res) => {
+router.delete('/posts/:id', (req, res) => {
     BlogPost
         .findByIdandRemove(req.params.id)
         .then(() => {
