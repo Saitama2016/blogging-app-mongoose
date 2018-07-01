@@ -4,7 +4,6 @@
   "description": "Express blog with Mongoose",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
     "start": "node server.js"
   },
   "repository": {

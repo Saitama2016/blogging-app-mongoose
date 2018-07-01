@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;
 
 const blogPostSchema = mongoose.Schema({
     title: {type: String, required: true},
-    content: {},
+    content: {type: String},
     author: {
         firstName: String,
         lastName: String
@@ -18,7 +18,7 @@ blogPostSchema.virtual('authorName').get(function() {
     return `${auth.firstName} ${auth.lastName}`.trim();
 });
 
-blogPostSchema.method.serialize = function() {
+blogPostSchema.methods.serialize = function() {
     return {
         id: this._id,
         title: this.title,

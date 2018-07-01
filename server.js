@@ -81,18 +81,16 @@ app.put('/posts/:id', (req, res) => {
     });
 
     BlogPost
-        .findByIdandRemove(req.params.id)
-        .then(() => {
-            console.log(`Deleted blog post with id \`${req.params.id}\``);
-            res.status(204).end();
-        });
+        .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
+        .then(updatedPost => res.status(204).end())
+        .catch(err => res.status(500).json({ message: 'Something went wrong' }));
     // res.send('PUT /posts/:id')
 });
 
 //Begin delete request
-app.delete('/posts/:id', (req, res) => {
+app.delete('/:id', (req, res) => {
     BlogPost
-        .findByIdandRemove(req.params.id)
+        .findByIdAndRemove(req.params.id)
         .then(() => {
             console.log(`Deleted blog post with id \`${req.params.id}\``);
             res.status(204).end();
@@ -145,4 +143,4 @@ if (require.main === module) {
     runServer(DATABASE_URL).catch(err => console.error(err));
 }
 
-module.exports = {app, runServer, closeServer};
+module.exports = { runServer, app, closeServer };
