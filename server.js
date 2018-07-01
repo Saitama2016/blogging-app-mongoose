@@ -23,7 +23,7 @@ app.get('/posts', (req, res) => {
     })
     .catch(err => {
         console.error(err);
-        res.status(500).json({ error: 'done messed up.'});
+        res.status(500).json({ error: 'done messed up.' });
     });
     // res.send('GET /posts')
 });
@@ -34,7 +34,7 @@ app.get('/posts/:id', (req,res) => {
     .then(post => res.json(post.serialize()))
     .catch(err => {
         console.error(err);
-        res.status(500).json({ error: 'done messed up.'});
+        res.status(500).json({ error: 'done messed up.' });
     });
     // res.send('GET /posts/:id')
 });
@@ -62,6 +62,18 @@ app.post('/posts', (req, res) => {
             res.status(500).json({ error: 'Something went wrong' })
         });
 
+});
+
+app.delete('/post/:id', (req, res) => {
+    BlogPost
+        .findByIdAndRemove(req.params.id)
+        .then(() => {
+            res.status(204).json({ message: 'success' });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: 'something went wrong' })
+        });
 });
 
 //Begin put request with update function 
